@@ -1,5 +1,6 @@
 package com.practicalunittesting;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -13,16 +14,32 @@ import static org.testng.Assert.assertEquals;
 @Test
 public class FahrenheitCelciusConverterTest {
 
-    public void shouldConvertCelciusToFahrenheit() {
-        assertEquals(FahrenheitCelciusConverter.toFahrenheit(0), 32);
-        assertEquals(FahrenheitCelciusConverter.toFahrenheit(37), 98);
-        assertEquals(FahrenheitCelciusConverter.toFahrenheit(100), 212);
+    @Test(dataProvider = "getCelciusData")
+    public void shouldConvertCelciusToFahrenheit(int celcius, int expected) {
+        assertEquals(FahrenheitCelciusConverter.toFahrenheit(celcius), expected);
     }
 
-    public void shouldConvertFahrenheitToCelcius() {
-        assertEquals(FahrenheitCelciusConverter.toCelcius(32), 0);
-        assertEquals(FahrenheitCelciusConverter.toCelcius(100), 37);
-        assertEquals(FahrenheitCelciusConverter.toCelcius(212), 100);
+    @DataProvider
+    public Object[][] getCelciusData() {
+        return new Object[][] {
+                {0, 32},
+                {37, 98},
+                {100, 212}
+        };
+    }
+
+    @Test(dataProvider = "getFahrenheitData")
+    public void shouldConvertFahrenheitToCelcius(int fahrenheit, int expected) {
+        assertEquals(FahrenheitCelciusConverter.toCelcius(fahrenheit), expected);
+    }
+
+    @DataProvider
+    public Object[][] getFahrenheitData() {
+        return new Object[][] {
+                {32, 0},
+                {100, 37},
+                {212, 100}
+        };
     }
 
 }
